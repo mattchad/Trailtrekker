@@ -1,15 +1,15 @@
 <?php 
 	define("DATABASE_LOCATION", "localhost");
-	if(preg_match("@dalestreettrailtrekkers.com@", $_SERVER['HTTP_HOST']))
+	if(preg_match("@dalestreettrailtrekkers.mc@", $_SERVER['HTTP_HOST']))
 	{
-		define("DATABASE_USER", "trailtre_ttuser");
-		define("DATABASE_PASSWORD", "sLMk0GE3l2SE");
+		define("DATABASE_USER", "root");
+		define("DATABASE_PASSWORD", "");
 		define("DATABASE_NAME", "trailtre_trailtrekker");
 	}
 	else
 	{
-		define("DATABASE_USER", "root");
-		define("DATABASE_PASSWORD", "");
+		define("DATABASE_USER", "trailtre_ttuser");
+		define("DATABASE_PASSWORD", "sLMk0GE3l2SE");
 		define("DATABASE_NAME", "trailtre_trailtrekker");
 	}
 
