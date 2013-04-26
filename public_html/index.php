@@ -5,6 +5,8 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 		
+		<link rel="shortcut icon" href="/favicon.ico" />
+		
 		<title>Dale Street Trailtrekkers - 100km in 30 hours | 1-2 June 2013</title>
 		<!-- CSS -->
 		<link type="text/css" rel="stylesheet" href="/_css/style.css" />
