@@ -1,0 +1,294 @@
+body
+{
+	background: url(/_images/background.png) repeat-x #E0DDD0 0px -150px;
+	font-family: "proxima-nova", "Helvetica Neue", "Helvetica", Arial, sans-serif;
+	color: #666666;
+}
+
+.container
+{
+	width: 950px;
+	margin: 0px auto;
+}
+
+h1
+{
+	background: url(/_images/banner.png) no-repeat;
+	height: 150px;
+	margin: 0px;
+}
+
+h1 span
+{
+	position: absolute;
+	left: -99999px;
+}
+	
+.map_canvas_outer
+{
+	width: 80%;
+	margin: 0px auto;
+}
+
+/* BLOCK LAYOUT */
+
+.block
+{
+	background: #FFFFFF;
+	padding: 40px 20px 20px;
+	position: relative;
+	margin-bottom: 40px;
+}
+
+.block_collapsed .block_inner
+{
+	margin-top: -20px;
+}
+
+.block_inner
+{
+	width: 100%;
+	overflow: hidden;
+}
+
+.block h2
+{
+	font-family: "bebas-neue", "Helvetica Neue", "Helvetica", Arial, sans-serif;
+	position: absolute;
+	left: -10px;
+	top: -10px;
+	margin: 0px;
+	background: #5AC6E9;
+	line-height: 1;
+	padding: 8px 12px 6px;
+	font-weight: normal;
+	font-size: 26px;
+	color: #FFFFFF;
+}
+
+.block p
+{
+	margin-top: 0px;
+}
+
+/* BLOCK ROW */
+
+.block_row:before,
+.block_row:after
+{
+   content: ".";
+   display: block;
+   height: 0;
+   overflow: hidden;
+}
+.block_row:after
+{
+   clear: both;
+}
+
+.block_row
+{
+   zoom: 1;
+} /* IE 5.5/6/7 */
+
+/* BLOCK WIDTHS */
+
+.block_half,
+.block_quarter,
+.block_three_quarters,
+.block_third,
+.block_two_thirds
+{
+	float: left;
+	margin-right: 40px;
+	margin-bottom: 40px;
+}
+
+.block_half
+{
+	width: 415px;
+}
+
+.block_quarter
+{
+	width: 167px;
+}
+
+.block_three_quarters
+{
+	width: 663px;
+}
+
+.block_third
+{
+	width: 303px;
+}
+
+.block_two_thirds
+{
+	width: 527px;
+}
+
+.block_right
+{
+	margin-right: 0px;
+}
+
+#map-canvas
+{
+	height: 800px;
+}
+
+.fundraising_block p
+{
+	margin: 0px;
+}
+
+.fundraising_block .donation_progress_outer
+{
+	width: 100%;
+	overflow: hidden;
+	margin-bottom: 10px;
+}
+
+#donation_progress
+{
+	float: left;
+	width: 0%;
+	background: #666199;
+	display: block;
+	height: 40px;
+	line-height: 40px;
+	font-size: 30px;
+	margin-top: 10px;
+	font-family: "bebas-neue", "Helvetica Neue", "Helvetica", Arial, sans-serif;
+	color: #FFFFFF;
+	text-align: center;
+}
+
+.profile_image
+{
+	height: 167px;
+	margin: 0px;
+}
+
+/* UPDATES SECTION */
+
+.updates .block_inner
+{
+	height: 300px;
+	overflow: auto;
+}
+
+.update
+{
+	margin: 0px;
+	margin-bottom: 10px;
+	overflow: hidden;
+	width: 100%;
+}
+
+.update .side
+{
+	width: 50px;
+	float: left;
+	margin-right: 10px;
+}
+
+.update .side .image
+{
+	margin: 0px;
+	line-height: 0;
+	background: #EEEEEE;
+	height: 50px;
+	width: 50px;
+}
+
+.update .side .time
+{
+	margin: 0px;
+	font-size: 16px;
+	padding: 0px;
+	text-align: right;
+	padding-top: 5px;
+}
+
+.update .main
+{
+	background: #EEEEEE;
+	padding: 10px;
+	width: 310px;
+	float: left;
+	min-height: 60px;
+}
+
+.update .main p
+{
+	margin: 0px;
+}
+
+.update .main .text
+{
+	margin-bottom: 10px;
+}
+
+.update .main a
+{
+	color: #666199;
+}
+
+.update .main a:hover
+{
+	text-decoration: none;
+}
+
+.update .main .date
+{
+	font-size: 14px;
+	color: #999999;
+}
+
+/* LOGOS */
+
+.logo_pageplay,
+.logo_tariff_street
+{
+	margin: 0px;
+}
+
+.logo_pageplay a,
+.logo_tariff_street a
+{
+	display: block;
+	height: 100px;
+	width: 415px;
+	background: url(/_images/logo-pageplay.png) no-repeat;
+}
+
+.logo_tariff_street a
+{
+	background-image: url(/_images/logo-tariff-street.png);
+}
+
+.logo_pageplay a span,
+.logo_tariff_street a span
+{
+	position: absolute;
+	left: -99999px;
+}
+
+@media (max-width: 1188px)
+{
+	.map_canvas_outer
+	{
+		width: 95%;
+	}
+}
+
+@media (max-width: 985px)
+{
+	.map_canvas_outer
+	{
+		width: 910px;
+	}
+}
