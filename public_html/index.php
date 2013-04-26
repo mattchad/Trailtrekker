@@ -119,6 +119,7 @@
 						?>
 						<p>On 1st June 2013 Chris Charlton, Matt Chadwick, James Galley and Tom Yates will set off from Skipton in the Yorkshire Dales to complete Trailtrekker 2013, supported by Harry Bailey and Martin Hicks</p>
 						<p>Trailtrekker is a 100km trek for teams of four, over 30 hours (yes, that's day and night!) across the Yorkshire Dales National Park. Around 300 teams take part in the event each year, all raising money to help people in poverty.</p>
+						<p>It's all in support of Oxfam - whose work is as vital today as it's ever been.</p>
 					</div>
 				</div>
 				<div class="block block_half block_right updates">
