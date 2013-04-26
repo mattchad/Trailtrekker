@@ -14,7 +14,7 @@
 		<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 		
 		<!-- GOOGLE MAPS API -->
-		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=geometry"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false&amp;libraries=geometry"></script>
 		
 		<!-- JQUERY -->
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
@@ -22,10 +22,11 @@
 		<!-- UPDATES -->
 		<script type="text/javascript">
 			<?php 
-			$res = mysql_query("SELECT * FROM updates ORDER BY update_time DESC LIMIT 1");
+			$res = mysql_query("SELECT * FROM updates ORDER BY updateid DESC LIMIT 1");
 			$row = mysql_fetch_array($res);
-			echo "var last_update = " . (int)$row['update_time'] . ";";
+			echo "var last_update = " . (int)$row['updateid'] . ";";
 			?>
+			
 		</script>
 		
 		<!-- ROUTE / LOCATIONS PATHS -->
@@ -38,13 +39,12 @@
 				$i = 1;
 				while($row = mysql_fetch_array($res))
 				{
-				?>
-					new google.maps.LatLng(<?php echo $row['latitude'] . "," . $row['longitude']; ?>)<?php echo ($i < $num) ? "," : ""; ?>
-					
-				<?php
+					?>new google.maps.LatLng(<?php echo $row['latitude'] . "," . $row['longitude']; ?>)<?php 
+					if($i < $num) { echo ","; }
 					$i++;
 				}
 				?>
+				
 			];
 				
 			var locations = 
@@ -55,13 +55,12 @@
 				$i = 1;
 				while($row = mysql_fetch_array($res))
 				{
-				?>
-					new google.maps.LatLng(<?php echo $row['latitude'] . "," . $row['longitude']; ?>)<?php if($i < $num) { echo ","; } ?>
-					
-				<?php
+					?>new google.maps.LatLng(<?php echo $row['latitude'] . "," . $row['longitude']; ?>)<?php 
+					if($i < $num) { echo ","; }
 					$i++;
 				}
 				?>
+				
 			];
 		</script>
 		
@@ -209,13 +208,13 @@
 												}
 												case "stile":
 												{
-													$stiles = mysql_query("SELECT * FROM updates WHERE type='stile' AND updateid <= " . $row['updateid']);
+													$stiles = mysql_query("SELECT * FROM updates WHERE type='stile' AND update_time <= " . $row['update_time']);
 													echo "We've just crossed a stile, that's " . mysql_num_rows($stiles) .  " in total!";
 													break;
 												}
 												case "gate":
 												{
-													$gates = mysql_query("SELECT * FROM updates WHERE type='gate' AND updateid <= " . $row['updateid']);
+													$gates = mysql_query("SELECT * FROM updates WHERE type='gate' AND update_time <= " . $row['update_time']);
 													echo "We've just gone through a gate, that's " . mysql_num_rows($gates) .  " in total!";
 													break;
 												}

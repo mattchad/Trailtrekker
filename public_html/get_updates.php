@@ -32,14 +32,14 @@
 	{
 		$last_update = $_GET['last_update'];
 		$i = 0;
-		$res = mysql_query("SELECT * FROM updates WHERE update_time > " . $_GET['last_update'] . " ORDER BY update_time DESC") or die(mysql_error());
+		$res = mysql_query("SELECT * FROM updates WHERE updateid > " . $_GET['last_update'] . " ORDER BY update_time DESC") or die(mysql_error());
 		if(mysql_num_rows($res))
 		{
 			while($row = mysql_fetch_array($res))
 			{
 				if($i == 0)
 				{
-					$last_update = $row['update_time'];
+					$last_update = $row['updateid'];
 				}
 				//#########################################################
 				//THIS ALSO NEEDS TO BE UPDATED IN THE INDEX.PHP FILE
@@ -123,13 +123,13 @@
 								}
 								case "stile":
 								{
-									$stiles = mysql_query("SELECT * FROM updates WHERE type='stile' AND updateid <= " . $row['updateid']);
+									$stiles = mysql_query("SELECT * FROM updates WHERE type='stile' AND update_time <= " . $row['update_time']);
 									echo "We've just crossed a stile, that's " . mysql_num_rows($stiles) .  " in total!";
 									break;
 								}
 								case "gate":
 								{
-									$gates = mysql_query("SELECT * FROM updates WHERE type='gate' AND updateid <= " . $row['updateid']);
+									$gates = mysql_query("SELECT * FROM updates WHERE type='gate' AND update_time <= " . $row['update_time']);
 									echo "We've just gone through a gate, that's " . mysql_num_rows($gates) .  " in total!";
 									break;
 								}
