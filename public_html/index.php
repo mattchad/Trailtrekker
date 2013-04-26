@@ -71,6 +71,7 @@
 		<!-- WEBFONT LOADER -->
 		<script type="text/javascript" src="/_js/webfont-loader.js"></script>
 		
+		<?php if(LIVE_SITE) { ?>
 		<!-- GOOGLE ANALYTICS -->
 		<script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -81,6 +82,7 @@
 			ga('create', 'UA-40479841-1', 'dalestreettrailtrekkers.com');
 			ga('send', 'pageview');
 		</script>
+		<?php } ?>
 		
 	</head>
 	<body>

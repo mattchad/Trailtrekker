@@ -5,12 +5,16 @@
 		define("DATABASE_USER", "root");
 		define("DATABASE_PASSWORD", "");
 		define("DATABASE_NAME", "trailtre_trailtrekker");
+		
+		define("LIVE_SITE", false);
 	}
 	else
 	{
 		define("DATABASE_USER", "trailtre_ttuser");
 		define("DATABASE_PASSWORD", "sLMk0GE3l2SE");
 		define("DATABASE_NAME", "trailtre_trailtrekker");
+		
+		define("LIVE_SITE", true);
 	}
 
 	define("CONSUMER_KEY", "NqWlcWnagu6V7TLo8yavw");
