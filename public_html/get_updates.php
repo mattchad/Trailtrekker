@@ -16,9 +16,27 @@
 				mysql_query("UPDATE twitter_accounts SET last_checked='" . time() . "', last_id='" . $api_data[0]->id . "' WHERE username = '" . $row['username'] . "'") or die(mysql_error());
 				foreach($api_data as $tweet)
 				{
+					$closest_point = "";
+					$closest_distance = 999999;
+					$temp_distance = 0;
+					if(isset($tweet->geo->coordinates))
+					{
+						$route = mysql_query("SELECT * FROM route ORDER BY routeid ASC");
+						while($point = mysql_fetch_array($route))
+						{
+							$temp_distance = haversine($tweet->geo->coordinates[0], $tweet->geo->coordinates[1], $point['latitude'], $point['longitude']);
+							
+							//If the point isn't within 10 miles we assume it has nothing to do with the day.
+							if($temp_distance < $closest_distance && $temp_distance < 10)
+							{
+								$closest_distance = $temp_distance;
+								$closest_point = $point['routeid'];
+							}
+						}
+					}
 					if(preg_match("@trailtrekker@msi", $tweet->text))
 					{
-						mysql_query("INSERT INTO updates SET type='twitter', content='" . htmlentities($tweet->text, ENT_QUOTES) . "', update_time='" . strtotime($tweet->created_at) . "', source='" . $row['username'] . "'") or die(mysql_error());
+						mysql_query("INSERT INTO updates SET type='twitter', content='" . htmlentities($tweet->text, ENT_QUOTES) . "', update_time='" . strtotime($tweet->created_at) . "', source='" . $row['username'] . "', route_location_id='" . $closest_point . "'") or die(mysql_error());
 					}
 				}
 			}

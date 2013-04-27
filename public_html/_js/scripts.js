@@ -152,6 +152,16 @@ function initialize()
 		icon: new google.maps.MarkerImage('http://trailtrekker.modliadev.com/_images/map-cp4.png',null,null,new google.maps.Point(20, 20))
 	});
 	
+	for(var i = 0; i < tweets.length; i++)
+	{
+		new google.maps.Marker(
+		{
+			map: map,
+			position: tweets[i],
+			icon: 'http://trailtrekker.modliadev.com/_images/map-tweet.png'
+		});
+	}
+	
 	
 	//FINDS THE CLOSEST POINT ON THE ROUTE TO GIVEN LATLNG
 	function calculateClosest(point)

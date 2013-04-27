@@ -29,7 +29,7 @@
 			$row = mysql_fetch_array($res);
 			echo "var last_update = " . (int)$row['updateid'] . ";";
 			?>
-			
+
 		</script>
 		
 		<!-- ROUTE / LOCATIONS PATHS -->
@@ -49,6 +49,23 @@
 					?>new google.maps.LatLng(<?php echo $row['latitude'] . "," . $row['longitude']; ?>)<?php 
 					if($i < $num) { echo ","; }
 					}
+					$i++;
+				}
+				?>
+				
+			];
+			
+			var tweets = 
+			[
+				<?php 
+				$res = mysql_query("SELECT * FROM updates WHERE type='twitter' AND route_location_id != ''") or die(mysql_error());
+				$num = mysql_num_rows($res);
+				$i = 1;
+				while($row = mysql_fetch_array($res))
+				{
+					$route_coods = mysql_fetch_array(mysql_query("SELECT * FROM route WHERE routeid='" . $row['route_location_id'] . "'"));
+					?>new google.maps.LatLng(<?php echo $route_coods['latitude'] . "," . $route_coods['longitude']; ?>)<?php 
+					if($i < $num) { echo ","; }
 					$i++;
 				}
 				?>
