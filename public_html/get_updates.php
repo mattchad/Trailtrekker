@@ -62,7 +62,7 @@
 											}
 											case "chrischarlton":
 											{
-												echo '<img src="https://si0.twimg.com/profile_images/3563521366/72c188d465c80284f0956c622cab1e42_bigger.jpeg" width="50" height="50" alt="Chris Charlton" />';
+												echo '<img src="https://si0.twimg.com/profile_images/3563521366/72c188d465c80284f0956c622cab1e42_bigger.jpeg" width="50" height="50" alt="Christopher Charlton" />';
 												break;
 											}
 											case "harrybailey":
