@@ -16,7 +16,8 @@
 		<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 		
 		<!-- GOOGLE MAPS API -->
-		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false&amp;libraries=geometry"></script>
+		<!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false&amp;libraries=geometry"></script>-->
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
 		
 		<!-- JQUERY -->
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
@@ -33,6 +34,9 @@
 		
 		<!-- ROUTE / LOCATIONS PATHS -->
 		<script type="text/javascript">
+			<?php $route_precision = 3;?>
+			var route_precision = <?php echo $route_precision;?>; //The higher the number, the less precise
+			
 			var route = 
 			[
 				<?php 
@@ -41,29 +45,17 @@
 				$i = 1;
 				while($row = mysql_fetch_array($res))
 				{
+					if(($i%$route_precision) == "0"){
 					?>new google.maps.LatLng(<?php echo $row['latitude'] . "," . $row['longitude']; ?>)<?php 
 					if($i < $num) { echo ","; }
+					}
 					$i++;
 				}
 				?>
 				
 			];
 				
-			var locations = 
-			[
-				<?php 
-				$res = mysql_query("SELECT * FROM route ORDER BY routeid ASC LIMIT 1000") or die(mysql_error());
-				$num = mysql_num_rows($res);
-				$i = 1;
-				while($row = mysql_fetch_array($res))
-				{
-					?>new google.maps.LatLng(<?php echo $row['latitude'] . "," . $row['longitude']; ?>)<?php 
-					if($i < $num) { echo ","; }
-					$i++;
-				}
-				?>
-				
-			];
+			var last_location = 0/route_precision;
 		</script>
 		
 		<!-- JAVASCRIPT -->
@@ -243,7 +235,7 @@
 		</div>
 		<div class="block block_collapsed map_canvas_outer">
 			<div id="map-canvas"></div>
-			<h2>The Route</h2>
+			<h2>The Route <span id="distance"></span></h2>
 		</div>
 		<div class="container">
 			<div class="block_row">

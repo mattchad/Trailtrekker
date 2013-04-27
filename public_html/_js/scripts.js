@@ -22,14 +22,35 @@ function adjust_block_heights()
 	});
 }
 
+if (typeof Number.prototype.toRad == 'undefined')
+{
+	Number.prototype.toRad = function()
+	{
+		return this * Math.PI / 180;
+	}
+}
+
+function haversine(latlng1, latlng2)
+{
+	var R = 6378.137; // Earth's km radius according to Google
+	var dLat = (latlng2.lat() - latlng1.lat()).toRad();
+	var dLon = (latlng2.lng() - latlng1.lng()).toRad();
+	var lat1 = latlng1.lat().toRad();
+	var lat2 = latlng2.lat().toRad();
+	
+	var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+	return (R * c);
+}
+
 google.maps.Polyline.prototype.inKm = function(n)
 { 
 	var a = this.getPath(n), len = a.getLength(), dist = 0; 
 	for (var i=0; i < (a.getLength()-1); i++)
 	{ 
-		dist += google.maps.geometry.spherical.computeDistanceBetween(a.getAt(i), a.getAt(i+1))
+		dist += haversine(a.getAt(i), a.getAt(i+1));
 	}
-	return (dist / 1000); //Return distance in kilometers
+	return dist;
 }
 
 function initialize()
@@ -57,15 +78,16 @@ function initialize()
 	routeLine.setMap(map);
 	
 	//ADD COMPLETED LOCATIONS LINE TO MAP
+	var comp_path = route.slice(0,last_location);
 	var locationsLine = new google.maps.Polyline(
 	{
-		path: locations,
+		path: comp_path,
 		strokeOpacity: 1,
 		strokeWeight: 3,
 		strokeColor: "#FF0000"
 	});
 	
-	//locationsLine.setMap(map);
+	locationsLine.setMap(map);
 	
 	//DETERMINE THE BOUNDS OF THE ROUTE AND SCALE THE MAP ACCORDINGLY
 	var bounds = new google.maps.LatLngBounds();
@@ -78,8 +100,9 @@ function initialize()
 	map.fitBounds(bounds);
 	
 	//ADD TOTAL DISTANCE IN KM
-	
-	$("#distance").html(routeLine.inKm());
+	//console.log(google.maps.geometry.spherical.computeLength(route)/1000);
+	//$("#distance").html(google.maps.geometry.spherical.computeLength(routeLine));
+	//$("#distance").html(routeLine.inKm());
 	
 	//ADD MARKERS TO MAP
 	var marker = new google.maps.Marker(
@@ -95,7 +118,7 @@ function initialize()
 	var sf = new google.maps.Marker(
 	{
 		map: map,
-		position: new google.maps.LatLng(53.962407,-2.036387	),
+		position: new google.maps.LatLng(53.962407,-2.036387),
 		icon: 'http://trailtrekker.modliadev.com/_images/map-sf.png'
 	});
 	

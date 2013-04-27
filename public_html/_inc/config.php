@@ -31,4 +31,17 @@
 		$string = "<a href=\"" . preg_replace("/#/", "%23", $a[0]) . "\">" . $a[0] . "</a>";
 		return $string;	
 	}
+	
+	function haversine($lat_1,$long_1,$lat_2, $long_2)
+	{
+		$R = 6378.137;
+		$dLat = deg2rad($lat_1 - $lat_2);
+		$dLon = deg2rad($long_1 - $long_2);;
+		$lat1 = deg2rad($lat_1);
+		$lat2 = deg2rad($lat_2);
+		
+		$a = sin($dLat/2) * sin($dLat/2) + sin($dLon/2) * sin($dLon/2) * cos($lat2) * cos($lat2); 
+		$c = 2 * atan2(sqrt($a), sqrt(1-$a)); 
+		return ($R * $c);
+	}
 ?>
