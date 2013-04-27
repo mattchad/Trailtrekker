@@ -30,6 +30,8 @@ if (typeof Number.prototype.toRad == 'undefined')
 	}
 }
 
+var markers = [];
+
 function haversine(latlng1, latlng2)
 {
 	var R = 6378.137; // Earth's km radius according to Google
@@ -115,40 +117,50 @@ function initialize()
 		map: map,
 	});
 	
-	var sf = new google.maps.Marker(
+	markers[0] = new google.maps.Marker(
 	{
 		map: map,
 		position: new google.maps.LatLng(53.962407,-2.036387),
-		icon: 'http://trailtrekker.modliadev.com/_images/map-sf.png'
+		icon: new google.maps.MarkerImage('http://trailtrekker.modliadev.com/_images/map-sf.png',null,null,new google.maps.Point(20, 20))
 	});
 	
-	var cp1 = new google.maps.Marker(
+	markers[1] = new google.maps.Marker(
 	{
 		map: map,
 		position: new google.maps.LatLng(54.057265,-2.153943),
-		icon: 'http://trailtrekker.modliadev.com/_images/map-cp1.png'
+		icon: new google.maps.MarkerImage('http://trailtrekker.modliadev.com/_images/map-cp1.png',null,null,new google.maps.Point(20, 20))
 	});
 	
-	var cp2 = new google.maps.Marker(
+	markers[2] = new google.maps.Marker(
 	{
 		map: map,
 		position: new google.maps.LatLng(54.149485,-2.298439),
-		icon: 'http://trailtrekker.modliadev.com/_images/map-cp2.png'
+		icon: new google.maps.MarkerImage('http://trailtrekker.modliadev.com/_images/map-cp2.png',null,null,new google.maps.Point(20, 20))
 	});
 	
-	var cp3 = new google.maps.Marker(
+	markers[3] = new google.maps.Marker(
 	{
 		map: map,
 		position: new google.maps.LatLng(54.188843,-2.089022),
-		icon: 'http://trailtrekker.modliadev.com/_images/map-cp3.png'
+		icon: new google.maps.MarkerImage('http://trailtrekker.modliadev.com/_images/map-cp3.png',null,null,new google.maps.Point(20, 20))
 	});
 	
-	var cp4 = new google.maps.Marker(
+	markers[4] = new google.maps.Marker(
 	{
 		map: map,
 		position: new google.maps.LatLng(54.103137,-2.034767),
-		icon: 'http://trailtrekker.modliadev.com/_images/map-cp4.png'
+		icon: new google.maps.MarkerImage('http://trailtrekker.modliadev.com/_images/map-cp4.png',null,null,new google.maps.Point(20, 20))
 	});
+	
+	for(var i = 0; i < tweets.length; i++)
+	{
+		new google.maps.Marker(
+		{
+			map: map,
+			position: tweets[i],
+			icon: 'http://trailtrekker.modliadev.com/_images/map-tweet.png'
+		});
+	}
 	
 	
 	//FINDS THE CLOSEST POINT ON THE ROUTE TO GIVEN LATLNG
@@ -232,4 +244,22 @@ $(document).ready(function()
 			i++;
 		}, (1800/total));
 	});
+	
+	/* $("body").click(function()
+	{
+		console.log("click");
+		for(var i = 0; i < markers.length; i++)
+		{
+			if(markers[i].getVisible())
+			{
+				console.log("true");
+				markers[i].setVisible(false);
+			}
+			else
+			{
+				console.log("false");
+				markers[i].setVisible(true);
+			}
+		}
+	}); */
 });
