@@ -117,7 +117,7 @@
 							$api_data = $connection->get('application/rate_limit_status', array("resources" => "statuses"));
 							//print_r($api_data);
 						?>
-						<p>On 1st June 2013 Chris Charlton, Matt Chadwick, James Galley and Tom Yates will set off from Skipton in the Yorkshire Dales to complete Trailtrekker 2013, supported by Harry Bailey and Martin Hicks</p>
+						<p>On 1st June 2013 Christopher Charlton, Matt Chadwick, James Galley and Tom Yates will set off from Skipton in the Yorkshire Dales to complete Trailtrekker 2013, supported by Harry Bailey and Martin Hicks</p>
 						<p>Trailtrekker is a 100km trek for teams of four, over 30 hours (yes, that's day and night!) across the Yorkshire Dales National Park. Around 300 teams take part in the event each year, all raising money to help people in poverty.</p>
 						<p>It's all in support of Oxfam - whose work is as vital today as it's ever been.</p>
 					</div>
@@ -150,7 +150,7 @@
 															}
 															case "chrischarlton":
 															{
-																echo '<img src="https://si0.twimg.com/profile_images/3563521366/72c188d465c80284f0956c622cab1e42_bigger.jpeg" width="50" height="50" alt="Chris Charlton" />';
+																echo '<img src="https://si0.twimg.com/profile_images/3563521366/72c188d465c80284f0956c622cab1e42_bigger.jpeg" width="50" height="50" alt="Christopher Charlton" />';
 																break;
 															}
 															case "harrybailey":
@@ -248,9 +248,9 @@
 		<div class="container">
 			<div class="block_row">
 				<div class="block block_quarter">
-					<h2>Chris</h2>
+					<h2>Christopher</h2>
 					<div class="block_inner">
-						<p class="profile_image"><img src="/_images/profile-chris.jpg" alt="Photo of Chris Charlton" /></p>
+						<p class="profile_image"><img src="/_images/profile-chris.jpg" alt="Photo of Christopher Charlton" /></p>
 					</div>
 				</div>
 				<div class="block block_quarter">
