@@ -54,8 +54,8 @@
 				?>
 				
 			];
-				
-			var last_location = 0/route_precision;
+			<?php $last_location = mysql_fetch_array(mysql_query("SELECT * FROM locations ORDER BY locationid DESC LIMIT 1")); ?>
+			var last_location = <?php echo $last_location['route_location_id']; ?>/route_precision;
 		</script>
 		
 		<!-- JAVASCRIPT -->
