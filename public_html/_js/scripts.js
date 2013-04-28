@@ -31,6 +31,7 @@ if (typeof Number.prototype.toRad == 'undefined')
 }
 
 var markers = [];
+var tweetMarkers = [];
 
 function haversine(latlng1, latlng2)
 {
@@ -124,6 +125,11 @@ function initialize()
 		icon: new google.maps.MarkerImage('http://trailtrekker.modliadev.com/_images/map-sf.png',null,null,new google.maps.Point(20, 20))
 	});
 	
+	var infowindow = new google.maps.InfoWindow(
+	{
+		content: "Some tweet or other"
+	});
+	
 	markers[1] = new google.maps.Marker(
 	{
 		map: map,
@@ -154,12 +160,21 @@ function initialize()
 	
 	for(var i = 0; i < tweets.length; i++)
 	{
-		new google.maps.Marker(
+		tweetMarkers[i] = new google.maps.Marker(
 		{
 			map: map,
-			position: tweets[i],
+			position: tweets[i][0],
 			icon: 'http://trailtrekker.modliadev.com/_images/map-tweet.png'
 		});
+		
+		google.maps.event.addListener(tweetMarkers[i], 'click', (function(marker, content)
+		{
+			return function()
+			{
+				infowindow.setContent(content);
+				infowindow.open(map,marker);
+			}
+		})(tweetMarkers[i], tweets[i][1])); 
 	}
 	
 	
