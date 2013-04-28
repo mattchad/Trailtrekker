@@ -16,7 +16,16 @@
 		
 		define("LIVE_SITE", true);
 	}
-
+	
+	if(time() > 1370041200)
+	{
+		define("AFTER_EVENT_START_DATE", true);
+	}
+	else
+	{
+		define("AFTER_EVENT_START_DATE", false);
+	}
+	
 	define("CONSUMER_KEY", "NqWlcWnagu6V7TLo8yavw");
 	define("CONSUMER_SECRET", "h7yKu8npj0xWSDz5XYOYU3Um4CQbyBpBtqbJpLysRBw");
 	define("ACCESS_TOKEN", "21230228-wzzwJXSQlXOrEuYavqy2TxITE2HEzKwC81pUf6em8");
