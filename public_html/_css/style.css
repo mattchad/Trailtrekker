@@ -30,6 +30,19 @@ h1 span
 	margin: 0px auto;
 }
 
+.tweet_window
+{
+	padding: 10px;
+	width: 250px;
+}
+
+.tweet_window img
+{
+	width: 250px;
+	height: 250px;
+	margin-bottom: 10px;
+}
+
 /* BLOCK LAYOUT */
 
 .block

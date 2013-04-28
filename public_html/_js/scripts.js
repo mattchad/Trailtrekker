@@ -115,19 +115,16 @@ function initialize()
 	
 	var marker2 = new google.maps.Marker(
 	{
-		map: map,
+		map: map
 	});
+	
+	var infowindow = new google.maps.InfoWindow();
 	
 	markers[0] = new google.maps.Marker(
 	{
 		map: map,
 		position: new google.maps.LatLng(53.962407,-2.036387),
 		icon: new google.maps.MarkerImage('http://trailtrekker.modliadev.com/_images/map-sf.png',null,null,new google.maps.Point(20, 20))
-	});
-	
-	var infowindow = new google.maps.InfoWindow(
-	{
-		content: "Some tweet or other"
 	});
 	
 	markers[1] = new google.maps.Marker(
@@ -243,10 +240,7 @@ $(document).ready(function()
 		$("#donation_progress").animate(
 		{
 			width: "+=" + total + "%"
-		}, 2000, function()
-		{
-			//$("#donation_progress").delay(1000).html(total + "%");
-		});
+		}, 2000);
 		
 		var i = 0;
 		var interval = setInterval(function()

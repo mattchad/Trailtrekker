@@ -64,7 +64,7 @@
 				while($row = mysql_fetch_array($res))
 				{
 					$route_coods = mysql_fetch_array(mysql_query("SELECT * FROM route WHERE routeid='" . $row['route_location_id'] . "'"));
-					?>[new google.maps.LatLng(<?php echo $route_coods['latitude'] . "," . $route_coods['longitude']; ?>), '<?php echo addslashes($row['content']); ?>']<?php 
+					?>[new google.maps.LatLng(<?php echo $route_coods['latitude'] . "," . $route_coods['longitude']; ?>), '<p class="tweet_window"><?php echo addslashes($row['content']); ?></p>']<?php 
 					if($i < $num) { echo ","; }
 					$i++;
 				}
