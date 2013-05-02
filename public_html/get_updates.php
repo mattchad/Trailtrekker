@@ -35,9 +35,6 @@
 							}
 						}
 					}
-					echo "<pre>";
-					print_r($api_data);
-					echo "</pre>";
 					if(preg_match("@trailtrekker@msi", $tweet->text))
 					{
 						mysql_query("INSERT INTO updates SET type='twitter', content='" . htmlentities($tweet->text, ENT_QUOTES) . "', update_time='" . strtotime($tweet->created_at) . "', source='" . $row['username'] . "', route_location_id='" . $closest_point . "'") or die(mysql_error());
