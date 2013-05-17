@@ -26,9 +26,8 @@
 						{
 							$temp_distance = haversine($tweet->geo->coordinates[0], $tweet->geo->coordinates[1], $point['latitude'], $point['longitude']);
 							
-							//If the point isn't within 10 miles we assume it has nothing to do with the day.
-							//if($temp_distance < $closest_distance && $temp_distance < 10)
-							if($temp_distance < $closest_distance)
+							//If the point isn't within 10 miles we assume it has nothing to do with the day, unless we're on the test site
+							if($temp_distance < $closest_distance && ($temp_distance < 10 || !LIVE_SITE))
 							{
 								$closest_distance = $temp_distance;
 								$closest_point = $point['routeid'];
