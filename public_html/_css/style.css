@@ -247,8 +247,9 @@ h1 span
 
 .tweet_photo_thumbnail img
 {
-	width: 310px;
+	width: 200px;
 	margin-top: 15px;
+	display: block;
 }
 
 .update .main a
