@@ -17,7 +17,7 @@
 		define("LIVE_SITE", true);
 	}
 	
-	if(time() > 1370041200)
+	if(time() > 1370041200) //Midnight on June 1st
 	{
 		define("AFTER_EVENT_START_DATE", true);
 	}
@@ -26,6 +26,15 @@
 		define("AFTER_EVENT_START_DATE", false);
 	}
 	
+	if(time() > 1370185200) // 5pm on 2nd June
+	{
+		define("BEFORE_EVENT_END_DATE", false);
+	}
+	else
+	{
+		define("BEFORE_EVENT_END_DATE", true);
+	}
+		
 	define("CONSUMER_KEY", "NqWlcWnagu6V7TLo8yavw");
 	define("CONSUMER_SECRET", "h7yKu8npj0xWSDz5XYOYU3Um4CQbyBpBtqbJpLysRBw");
 	define("ACCESS_TOKEN", "21230228-wzzwJXSQlXOrEuYavqy2TxITE2HEzKwC81pUf6em8");

@@ -36,7 +36,19 @@
 					}
 					if(preg_match("@trailtrekker@msi", $tweet->text))
 					{
-						mysql_query("INSERT INTO updates SET type='twitter', content='" . htmlentities($tweet->text, ENT_QUOTES) . "', update_time='" . strtotime($tweet->created_at) . "', source='" . $row['username'] . "', route_location_id='" . $closest_point . "'") or die(mysql_error());
+						$tweet_content = htmlentities($tweet->text, ENT_QUOTES);
+						$tweet_content = preg_replace_callback("/((https|http):\/\/[^\s]+)/", "my_urlencode", $tweet_content);
+						$tweet_content = preg_replace("/#([[:alpha:]]+[[:alnum:]]+)/", "<a href=\"http://www.twitter.com/search?q=$1\">#$1</a>", $tweet_content); 
+						$tweet_content = trim(preg_replace("/(^|[\n ])@([a-zA-Z0-9_]+)/", " <a href=\"http://www.twitter.com/$2\">@$2</a>", $tweet_content));
+						if(isset($tweet->entities->media) && sizeof($tweet->entities->media))
+						{
+							foreach($tweet->entities->media as $media)
+							{
+								$tweet_content .= '<a class="tweet_photo_thumbnail" href="' . $media->media_url . '"><img src="' . $media->media_url . '" alt="Embedded photo" /></a>';
+								str_replace($media->url, "", $tweet_content);
+							}
+						}
+						mysql_query("INSERT INTO updates SET type='twitter', content='" . $tweet_content . "', update_time='" . strtotime($tweet->created_at) . "', source='" . $row['username'] . "', route_location_id='" . $closest_point . "'") or die(mysql_error());
 					}
 				}
 			}
@@ -133,9 +145,6 @@
 							{
 								case "twitter":
 								{
-									$row['content'] = preg_replace_callback("/((https|http):\/\/[^\s]+)/", "my_urlencode", $row['content']);
-									$row['content'] = preg_replace("/#([[:alpha:]]+[[:alnum:]]+)/", "<a href=\"http://www.twitter.com/search?q=$1\">#$1</a>", $row['content']); 
-									$row['content'] = trim(preg_replace("/(^|[\n ])@([a-zA-Z0-9_]+)/", " <a href=\"http://www.twitter.com/$2\">@$2</a>", $row['content']));
 									echo html_entity_decode($row['content']); 
 									break;
 								}

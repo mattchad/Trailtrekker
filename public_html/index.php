@@ -212,9 +212,6 @@
 											{
 												case "twitter":
 												{
-													$row['content'] = preg_replace_callback("/((https|http):\/\/[^\s]+)/", "my_urlencode", $row['content']);
-													$row['content'] = preg_replace("/#([[:alpha:]]+[[:alnum:]]+)/", "<a href=\"http://www.twitter.com/search?q=$1\">#$1</a>", $row['content']); 
-													$row['content'] = trim(preg_replace("/(^|[\n ])@([a-zA-Z0-9_]+)/", " <a href=\"http://www.twitter.com/$2\">@$2</a>", $row['content']));
 													echo html_entity_decode($row['content']); 
 													break;
 												}
