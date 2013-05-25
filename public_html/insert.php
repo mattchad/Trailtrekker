@@ -4,17 +4,30 @@ $current_location = mysql_fetch_array(mysql_query("SELECT * FROM locations ORDER
 $result_text = "";
 if(sizeof($_POST))
 {
-	//Update location
-	$route = mysql_query("SELECT * FROM route");
-	$closest_point = $current_location['route_location_id'];
-	$min_distance = 9999;
-	while($row = mysql_fetch_array($route))
+	if(isset($_POST['start']))
 	{
-		$this_distance = haversine($_POST['latitude'],$_POST['longitude'],$row['latitude'],$row['longitude']);
-		if($this_distance < $min_distance)
-		{	
-			$min_distance = $this_distance;
-			$closest_point = $row['routeid'];
+		$closest_point = 1;
+	}
+	else if(isset($_POST['end']))
+	{
+		$end_location = mysql_fetch_array(mysql_query("SELECT * FROM route ORDER BY routeid DESC LIMIT 1"));
+		//print_r($end_location);
+		$closest_point = $end_location['routeid'];
+	}
+	else
+	{
+		//Update location
+		$route = mysql_query("SELECT * FROM route");
+		$closest_point = $current_location['route_location_id'];
+		$min_distance = 9999;
+		while($row = mysql_fetch_array($route))
+		{
+			$this_distance = haversine($_POST['latitude'],$_POST['longitude'],$row['latitude'],$row['longitude']);
+			if($this_distance < $min_distance)
+			{	
+				$min_distance = $this_distance;
+				$closest_point = $row['routeid'];
+			}
 		}
 	}
 	
@@ -26,25 +39,25 @@ if(sizeof($_POST))
 	
 	if(isset($_POST['start']))
 	{
-		mysql_query("INSERT INTO updates SET type='start', update_time='" . time() . "', route_location_id='1'");
+		mysql_query("INSERT INTO updates SET type='start', update_time='" . time() . "', route_location_id='" . $closest_point . "'");
 		$result_text = "Trailtrekker started at ";
 	}
 	
 	if(isset($_POST['stile']))
 	{
-		mysql_query("INSERT INTO updates SET type='stile', update_time='" . time() . "', route_location_id='1'");
-		$result_text = "Stile added at ";
+		mysql_query("INSERT INTO updates SET type='stile', update_time='" . time() . "', route_location_id='" . $closest_point . "'");
+		$result_text = $closest_point . " Stile added at ";
 	}
 	
 	if(isset($_POST['gate']))
 	{
-		mysql_query("INSERT INTO updates SET type='gate', update_time='" . time() . "', route_location_id='1'");
-		$result_text = "Gate added at ";
+		mysql_query("INSERT INTO updates SET type='gate', update_time='" . time() . "', route_location_id='" . $closest_point . "'");
+		$result_text = $closest_point . "Gate added at ";
 	}
 	
 	if(isset($_POST['end']))
 	{
-		mysql_query("INSERT INTO updates SET type='end', update_time='" . time() . "', route_location_id='1'");
+		mysql_query("INSERT INTO updates SET type='end', update_time='" . time() . "', route_location_id='" . $closest_point . "'");
 		$result_text = "Trailtrekker ended at ";
 	}
 }
@@ -103,6 +116,7 @@ $random_location = mysql_fetch_array(mysql_query("SELECT * FROM route WHERE rout
 				background: #000000;
 				text-align: center;
 				font-family: Arial, sans-serif;
+				color: #FFFFFF;
 			}
 			*
 			{
@@ -154,22 +168,24 @@ $random_location = mysql_fetch_array(mysql_query("SELECT * FROM route WHERE rout
 		<form action="" method="post">
 			<p><a href="/insert.php" class="button" style="background: purple;">Refresh</a></p>
 			<?php if(LIVE_SITE){ ?>
-			<p><input type="hidden" id="latitude" name="latitude" value="" /></p>
-			<p><input type="hidden" id="longitude" name="longitude" value="" /></p>
-			<p><input type="hidden" id="accuracy" name="accuracy" value="" /></p>
-			<p><input type="hidden" id="altitude" name="altitude" value="" /></p>
+				<p><input type="hidden" id="latitude" name="latitude" value="" /></p>
+				<p><input type="hidden" id="longitude" name="longitude" value="" /></p>
+				<p><input type="hidden" id="accuracy" name="accuracy" value="" /></p>
+				<p><input type="hidden" id="altitude" name="altitude" value="" /></p>
 			<?php } else { ?>
-			<p><input type="hidden" id="latitude" name="latitude" value="<?php echo $random_location['latitude'];?>" /></p>
-			<p><input type="hidden" id="longitude" name="longitude" value="<?php echo $random_location['longitude'];?>" /></p>
-			<p><input type="hidden" id="accuracy" name="accuracy" /></p>
-			<p><input type="hidden" id="altitude" name="altitude" value="<?php echo $random_location['altitude'];?>" /></p>
+				<p><input type="hidden" id="latitude" name="latitude" value="<?php echo $random_location['latitude'];?>" /></p>
+				<p><input type="hidden" id="longitude" name="longitude" value="<?php echo $random_location['longitude'];?>" /></p>
+				<p><input type="hidden" id="accuracy" name="accuracy" /></p>
+				<p><input type="hidden" id="altitude" name="altitude" value="<?php echo $random_location['altitude'];?>" /></p>
 			<?php } ?>
-			<?php if(!sizeof($_POST)){ ?>			
-			<p><input type="submit" name="start" value="Start" style="background: green;" /></p>
-			<p><input type="submit" name="location" value="Location update" /></p>
-			<p><input type="submit" name="stile" value="Stile" /></p>
-			<p><input type="submit" name="gate" value="Gate" /></p>
-			<p><input type="submit" name="end" value="End" style="background: red;" /></p>
+			<?php if(!sizeof($_POST)){ ?>
+				<?php if(!mysql_num_rows(mysql_query("SELECT * FROM updates WHERE type='start'"))){ ?>
+				<p><input type="submit" name="start" value="Start" style="background: green;" /></p>
+				<?php } ?>
+				<p><input type="submit" name="location" value="Location update" /></p>
+				<p><input type="submit" name="stile" value="Stile" /></p>
+				<p><input type="submit" name="gate" value="Gate" /></p>
+				<p><input type="submit" name="end" value="End" style="background: red;" /></p>
 			<?php } ?>
 		</form>
 	</body>
