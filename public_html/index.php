@@ -29,11 +29,11 @@
 		<!-- UPDATES -->
 		<script type="text/javascript">
 			<?php 
-			$res = mysql_query("SELECT * FROM updates ORDER BY updateid DESC LIMIT 1");
-			$row = mysql_fetch_array($res);
-			echo "var last_update = " . (int)$row['updateid'] . ";";
+			//$res = mysql_query("SELECT * FROM updates ORDER BY updateid DESC LIMIT 1");
+			//$row = mysql_fetch_array($res);
+			//echo "var last_update = " . (int)$row['updateid'] . ";";
 			?>
-
+			var last_update = 0;
 		</script>
 		
 		<!-- ROUTE / LOCATIONS PATHS -->
@@ -121,132 +121,52 @@
 				</div>
 			</div>
 			<div class="block_row">
-				<div class="block block_half">
-					<h2>About Trailtrekker</h2>
-					<div class="block_inner">
-						<?php 
-							$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
-							$connection->host = "https://api.twitter.com/1.1/";
-							$api_data = $connection->get('application/rate_limit_status', array("resources" => "statuses"));
-							//print_r($api_data);
-						?>
-						<p>On 1st June 2013 Christopher Charlton, Matt Chadwick, James Galley and Tom Yates will set off from Skipton in the Yorkshire Dales to complete Trailtrekker 2013, supported by Harry Bailey and Martin Hicks</p>
-						<p>Trailtrekker is a 100km trek for teams of four, over 30 hours (yes, that's day and night!) across the Yorkshire Dales National Park. Around 300 teams take part in the event each year, all raising money to help people in poverty.</p>
-						<p>It's all in support of Oxfam - whose work is as vital today as it's ever been.</p>
+				<div class="block_outer block_outer_half">
+					<div class="block">
+						<h2>About Trailtrekker</h2>
+						<div class="block_inner">
+							<p>On 1st June 2013 Christopher Charlton, Matt Chadwick, James Galley and Tom Yates will set off from Skipton in the Yorkshire Dales to complete Trailtrekker 2013, supported by Harry Bailey and Martin Hicks</p>
+							<p>Trailtrekker is a 100km trek for teams of four, over 30 hours (yes, that's day and night!) across the Yorkshire Dales National Park. Around 300 teams take part in the event each year, all raising money to help people in poverty.</p>
+							<p>It's all in support of Oxfam - whose work is as vital today as it's ever been.</p>
+						</div>
+					</div>
+					<div class="block progress">
+						<h2>Progress / Statistics</h2>
+						<div class="block_inner">
+							<?php 
+								$end_location = mysql_fetch_array(mysql_query("SELECT * FROM route ORDER BY cumulative_distance DESC LIMIT 1"));
+								$current_location = mysql_query("SELECT * FROM locations ORDER BY route_location_id DESC LIMIT 1");
+								if(mysql_num_rows($current_location))
+								{
+									$current_location = mysql_fetch_array($current_location);
+									$current_location = mysql_fetch_array(mysql_query("SELECT * FROM route WHERE routeid='" . $current_location['route_location_id'] . "'"));
+									$distance_covered = $current_location['cumulative_distance'];
+									$total_elevation = $current_location['cumulative_elevation'];
+									$calories_burned = "~" . round(($current_location['cumulative_distance'] / $end_location['cumulative_distance']) * 7000);
+								}
+								else
+								{
+									$distance_covered = 0;
+									$total_elevation = 0;
+									$calories_burned = 0;
+								}
+								
+								$total_stiles = mysql_num_rows(mysql_query("SELECT * FROM updates WHERE type='stile'"));
+								$total_gates = mysql_num_rows(mysql_query("SELECT * FROM updates WHERE type='gate'"));
+							?>
+							<p class="progress_row"><span class="label">Distance covered:</span> <span class="value"><?php echo round($distance_covered, 2); ?> km</span></p>
+							<p class="progress_row"><span class="label">Total Elevation:</span> <span class="value"><?php echo round($total_elevation); ?> m</span></p>
+							<p class="progress_row"><span class="label">Calories burned:</span> <span class="value"><?php echo $calories_burned; ?> kcal</span></p>
+							<p class="progress_row"><span class="label">Stile count:</span> <span class="value"><?php echo $total_stiles; ?></span></p>
+							<p class="progress_row"><span class="label">Gate count:</span> <span class="value"><?php echo $total_gates; ?></span></p>
+						</div>
 					</div>
 				</div>
-				<div class="block block_half block_right updates">
-					<h2>Updates</h2>
-					<div class="block_inner" id="update_list">
-						<?php 
-							$res = mysql_query("SELECT * FROM updates ORDER BY update_time DESC LIMIT 100");
-							while($row = mysql_fetch_array($res))
-							{
-								//#########################################################
-								//THIS ALSO NEEDS TO BE UPDATED IN THE GET_UPDATES.PHP FILE
-								//#########################################################
-								?>
-								<div class="update" id="update_<?php echo $row['updateid']; ?>">
-									<div class="side">
-										<p class="image">
-											<?php 
-												switch($row['type'])
-												{
-													case "twitter":
-													{
-														switch($row['source'])
-														{
-															case "mattchad":
-															{
-																echo '<img src="https://si0.twimg.com/profile_images/3191939089/16b0f6665e99fdd96dac93ed10acf5e9_bigger.jpeg" width="50" height="50" alt="Matt Chadwick" />';
-																break;
-															}
-															case "chrischarlton":
-															{
-																echo '<img src="https://si0.twimg.com/profile_images/3563521366/72c188d465c80284f0956c622cab1e42_bigger.jpeg" width="50" height="50" alt="Christopher Charlton" />';
-																break;
-															}
-															case "harrybailey":
-															{
-																echo '<img src="https://si0.twimg.com/profile_images/1629325845/image_bigger.jpg" width="50" height="50" alt="Harry Bailey" />';
-																break;
-															}
-															case "mynamesnotdave":
-															{
-																echo '<img src="https://si0.twimg.com/profile_images/3558929795/3180e03e4ceeaddcc8fed595505bc4b7_bigger.jpeg" width="50" height="50" alt="James Galley" />';
-																break;
-															}
-															case "James_Galley":
-															{
-																echo '<img src="https://si0.twimg.com/profile_images/2165865136/me-300x300_bigger.png" width="50" height="50" alt="James Galley" />';
-																break;
-															}
-															default:
-															{
-																echo '<img src="http://placehold.it/50x50" />';
-																break;
-															}
-														}
-														break;
-													}
-													case "stile":
-													{
-														echo '<img src="/_images/icon-stile.png" width="50" height="50" alt="Stile" />';
-														break;
-													}
-													case "gate":
-													{
-														echo '<img src="/_images/icon-gate.png" width="50" height="50" alt="Gate" />';
-														break;
-													}
-													default:
-													{
-														echo '<img src="http://placehold.it/50x50" />';
-														break;
-													}
-												}
-											?>
-										</p>
-										<p class="time"><?php echo date("H:i", $row['update_time']); ?></p>
-									</div>
-									<div class="main">
-										<p class="text">
-										<?php 
-											switch($row['type'])
-											{
-												case "twitter":
-												{
-													echo html_entity_decode($row['content']); 
-													break;
-												}
-												case "stile":
-												{
-													$stiles = mysql_query("SELECT * FROM updates WHERE type='stile' AND update_time <= " . $row['update_time']);
-													echo "We've just crossed a stile, that's " . mysql_num_rows($stiles) .  " in total!";
-													break;
-												}
-												case "gate":
-												{
-													$gates = mysql_query("SELECT * FROM updates WHERE type='gate' AND update_time <= " . $row['update_time']);
-													echo "We've just gone through a gate, that's " . mysql_num_rows($gates) .  " in total!";
-													break;
-												}
-												default:
-												{
-													break;
-												}
-											}
-										?>
-										</p>
-										<p class="date"><?php echo date("jS F", $row['update_time']); ?></p>
-									</div>
-								</div>
-								<?php
-								//#########################################################
-								//THIS ALSO NEEDS TO BE UPDATED IN THE GET_UPDATES.PHP FILE
-								//#########################################################
-							}
-						?>
+				<div class="block_outer block_outer_half block_right">
+					<div class="block updates" id="update_list_outer">
+						<h2>Updates</h2>
+						<div class="block_inner" id="update_list"></div>
+						<!-- This bit is added in using Javascript. -->
 					</div>
 				</div>
 			</div>

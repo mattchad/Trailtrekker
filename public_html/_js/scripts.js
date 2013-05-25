@@ -3,14 +3,22 @@ function adjust_block_heights()
 	$(".block_row").each(function(i,e)
 	{
 		var max_height = 0;
-		$(e).find(".block").each(function(j,f)
+		$(e).find("> .block, .block_outer").each(function(j,f)
 		{
 			if($(f).height() > max_height)
 			{
 				max_height = $(f).height();
 			}
 		});
-		$(e).find(".block").height(max_height);
+		$(e).find("> .block, .block_outer").height(max_height);
+		
+		$(e).find(".block_outer").each(function(j,f)
+		{
+			if($(f).find(".block").length == 1)
+			{
+				$(f).find(".block").height(max_height - 100);
+			}
+		});
 	});
 	
 	$("#donate_button").one('load', function()
@@ -20,6 +28,11 @@ function adjust_block_heights()
 	{
 		if(this.complete) $(this).load();
 	});
+	
+	if($("#update_list_outer").height() > $("#update_list").height())
+	{
+		$("#update_list").height($("#update_list_outer").height());
+	}
 }
 
 if (typeof Number.prototype.toRad == 'undefined')

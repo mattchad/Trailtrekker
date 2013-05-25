@@ -43,6 +43,17 @@ h1 span
 	margin-bottom: 10px;
 }
 
+.tweet_window
+{
+	padding: 10px;
+	margin: 0px;
+}
+
+.tweet_window img
+{
+	margin-bottom: 10px;
+}
+
 /* BLOCK LAYOUT */
 
 .block
@@ -107,6 +118,7 @@ h1 span
 /* BLOCK WIDTHS */
 
 .block_half,
+.block_outer_half,
 .block_quarter,
 .block_three_quarters,
 .block_third,
@@ -120,6 +132,12 @@ h1 span
 .block_half
 {
 	width: 415px;
+}
+
+.block_outer_half
+{
+	width: 455px;
+	margin-bottom: 0px;
 }
 
 .block_quarter
@@ -189,7 +207,7 @@ h1 span
 
 .updates .block_inner
 {
-	height: 450px;
+	height: 300px;
 	overflow: auto;
 }
 
@@ -266,6 +284,42 @@ h1 span
 {
 	font-size: 14px;
 	color: #999999;
+}
+
+/* PROGRESS */
+
+.progress
+{
+	font-family: "bebas-neue", "Helvetica Neue", "Helvetica", Arial, sans-serif;
+	font-size: 26px;
+}
+
+.progress_row
+{
+	overflow: hidden;
+	width: 100%;
+	margin-bottom: 0px;
+}
+
+.progress_row span
+{
+	
+}
+
+.progress_row .label
+{
+	color: #363636;
+	width: 180px;
+}
+
+.progress_row .value
+{
+	
+}
+
+.progress_last_update
+{
+	margin-bottom: 0px;
 }
 
 /* LOGOS */

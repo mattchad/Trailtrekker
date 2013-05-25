@@ -8,7 +8,7 @@
 	$res = mysql_query("SELECT * FROM twitter_accounts");
 	while($row = mysql_fetch_array($res))
 	{
-		if($row['last_checked'] < (time() - (60*15)))
+		if($row['last_checked'] < (time() - 50))
 		{
 			$api_data = $connection->get('statuses/user_timeline', array("screen_name" => $row['username'], "exclude_replies" => "true", "count" => "200", "include_rts" => false, "since_id" => $row['last_id']));
 			if(sizeof($api_data))
@@ -36,18 +36,24 @@
 					}
 					if(preg_match("@trailtrekker@msi", $tweet->text))
 					{
-						$tweet_content = htmlentities($tweet->text, ENT_QUOTES);
-						$tweet_content = preg_replace_callback("/((https|http):\/\/[^\s]+)/", "my_urlencode", $tweet_content);
-						$tweet_content = preg_replace("/#([[:alpha:]]+[[:alnum:]]+)/", "<a href=\"http://www.twitter.com/search?q=$1\">#$1</a>", $tweet_content); 
-						$tweet_content = trim(preg_replace("/(^|[\n ])@([a-zA-Z0-9_]+)/", " <a href=\"http://www.twitter.com/$2\">@$2</a>", $tweet_content));
+						$tweet_content = $tweet->text;
+					
+						$image_html = "";
 						if(isset($tweet->entities->media) && sizeof($tweet->entities->media))
 						{
 							foreach($tweet->entities->media as $media)
 							{
-								$tweet_content .= '<a rel="updates" class="tweet_photo_thumbnail fancybox" href="' . $media->media_url . '"><img src="' . $media->media_url . '" alt="Embedded photo" /></a>';
-								str_replace($media->url, "", $tweet_content);
+								$image_html .= '<a rel="updates" class="tweet_photo_thumbnail fancybox" href="' . $media->media_url . '"><img src="' . $media->media_url . '" alt="Embedded photo" /></a>';
+								$tweet_content = str_replace($media->url, "", $tweet_content);
 							}
 						}
+						
+						$tweet_content = htmlentities($tweet_content, ENT_QUOTES);
+						$tweet_content = preg_replace_callback("/((https|http):\/\/[^\s]+)/", "my_urlencode", $tweet_content);
+						$tweet_content = preg_replace("/#([[:alpha:]]+[[:alnum:]]+)/", "<a href=\"http://www.twitter.com/search?q=$1\">#$1</a>", $tweet_content); 
+						$tweet_content = trim(preg_replace("/(^|[\n ])@([a-zA-Z0-9_]+)/", " <a href=\"http://www.twitter.com/$2\">@$2</a>", $tweet_content));
+						$tweet_content .= $image_html;
+						
 						mysql_query("INSERT INTO updates SET type='twitter', content='" . $tweet_content . "', update_time='" . strtotime($tweet->created_at) . "', source='" . $row['username'] . "', route_location_id='" . $closest_point . "'") or die(mysql_error());
 					}
 				}
