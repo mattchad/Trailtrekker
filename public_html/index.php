@@ -75,8 +75,10 @@
 				?>
 				
 			];
-				
-			var last_location = 0/route_precision;
+			
+			<?php $last_location = mysql_fetch_array(mysql_query("SELECT * FROM locations ORDER BY route_location_id DESC")); ?>
+			var last_location = <?php echo (int)$last_location['route_location_id']; ?>/route_precision;
+			//var last_location = 0/route_precision;
 		</script>
 		
 		<!-- JAVASCRIPT -->
