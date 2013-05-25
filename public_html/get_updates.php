@@ -134,6 +134,16 @@
 										echo '<img src="/_images/icon-gate.png" width="50" height="50" alt="Gate" />';
 										break;
 									}
+									case "start":
+									{
+										echo '<img src="/_images/icon-start.png" width="50" height="50" alt="Start" />';
+										break;
+									}
+									case "end":
+									{
+										echo '<img src="/_images/icon-champagne.png" width="50" height="50" alt="Champagne" />';
+										break;
+									}
 									default:
 									{
 										echo '<img src="http://placehold.it/50x50" />';
@@ -164,6 +174,16 @@
 								{
 									$gates = mysql_query("SELECT * FROM updates WHERE type='gate' AND update_time <= " . $row['update_time']);
 									echo "We've just gone through a gate, that's " . mysql_num_rows($gates) .  " in total!";
+									break;
+								}
+								case "start":
+								{
+									echo "And we're off! 100km ahead of us.";
+									break;
+								}
+								case "end":
+								{
+									echo "We're finally done, 100km behind us!";
 									break;
 								}
 								default:
