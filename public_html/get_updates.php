@@ -44,7 +44,7 @@
 						{
 							foreach($tweet->entities->media as $media)
 							{
-								$tweet_content .= '<a class="tweet_photo_thumbnail" href="' . $media->media_url . '"><img src="' . $media->media_url . '" alt="Embedded photo" /></a>';
+								$tweet_content .= '<a rel="updates" class="tweet_photo_thumbnail fancybox" href="' . $media->media_url . '"><img src="' . $media->media_url . '" alt="Embedded photo" /></a>';
 								str_replace($media->url, "", $tweet_content);
 							}
 						}

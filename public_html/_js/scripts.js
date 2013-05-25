@@ -202,6 +202,8 @@ function initialize()
 
 $(document).ready(function()
 {
+	$(".fancybox").fancybox();
+
 	initialize();
 	
 	adjust_block_heights();

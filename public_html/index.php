@@ -22,6 +22,10 @@
 		<!-- JQUERY -->
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 		
+		<!-- FANCYBOX -->
+		<script type="text/javascript" src="/_js/fancybox/jquery.fancybox.pack.js"></script>
+		<link type="text/css" rel="stylesheet" href="/_js/fancybox/jquery.fancybox.css" />
+		
 		<!-- UPDATES -->
 		<script type="text/javascript">
 			<?php 
@@ -135,7 +139,7 @@
 					<h2>Updates</h2>
 					<div class="block_inner" id="update_list">
 						<?php 
-							$res = mysql_query("SELECT * FROM updates ORDER BY update_time DESC LIMIT 50");
+							$res = mysql_query("SELECT * FROM updates ORDER BY update_time DESC LIMIT 100");
 							while($row = mysql_fetch_array($res))
 							{
 								//#########################################################
