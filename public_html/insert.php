@@ -102,9 +102,13 @@ $random_location = mysql_fetch_array(mysql_query("SELECT * FROM route WHERE rout
 				function showLocation(position)
 				{
 					document.getElementById("latitude").value = position.coords.latitude;
+					document.getElementById("lt_det").innerHTML = position.coords.latitude.toFixed(3);
 					document.getElementById("longitude").value = position.coords.longitude;
+					document.getElementById("ln_det").innerHTML = position.coords.longitude.toFixed(3);
 					document.getElementById("altitude").value = position.coords.altitude;
+					document.getElementById("al_det").innerHTML = position.coords.altitude.toFixed(0);
 					document.getElementById("accuracy").value = position.coords.accuracy;
+					document.getElementById("acc_det").innerHTML = position.coords.accuracy.toFixed(0);
 				}
 								
 				getLocation();
@@ -159,12 +163,20 @@ $random_location = mysql_fetch_array(mysql_query("SELECT * FROM route WHERE rout
 				font-weight: bold;
 				padding: 0.5em 0px;
 			}
+			
+			.location_details
+			{
+				padding-top: 1em;
+			}
 		</style>
 	</head>
 	<body>
 		<div class="result">
 			<?php echo $result_text; ?> <?php echo date("H:i:s")?>
 		</div>
+		<p class="location_details">
+			<span id="lt_det"></span>, <span id="ln_det"></span> | Al: <span id="al_det"></span>m | Acc: <span id="acc_det"></span>m
+		</p>
 		<form action="" method="post">
 			<p><a href="/insert.php" class="button" style="background: purple;">Refresh</a></p>
 			<?php if(LIVE_SITE){ ?>
