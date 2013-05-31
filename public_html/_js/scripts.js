@@ -252,6 +252,12 @@ $(document).ready(function()
 		$("#temp_fundraising_content").find(".base > strong .cent-sign").remove();
 		var total = $("#temp_fundraising_content").find(".base > strong em").html();
 		$("#temp_fundraising_content").remove();
+		
+		width = total;
+		if(width > 100)
+		{
+			width = 100;
+		}
 		$("#donation_progress").animate(
 		{
 			width: "+=" + total + "%"
